@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "logical",
+  "version": "${version}",
+
+  "name": "logical",
+  "description": "Mod about Redstone, Logic Gates and Integrated Circuits",
+  "authors": [
+    "Stephan Bruening"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/SteBruening/logical"
+  },
+
+  "license": "MIT",
+  "icon": "assets/logical/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.stebruening.logical.Logical"
+    ],
+    "client": [
+      "de.stebruening.logical.LogicalClient"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

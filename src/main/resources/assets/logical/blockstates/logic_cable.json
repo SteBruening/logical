@@ -1,0 +1,33 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "logical:block/logic_cable/logic_cable"
+      }
+    },
+    {
+      "when": { "north": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection" }
+    },
+    {
+      "when": { "east": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection", "y": 90 }
+    },
+    {
+      "when": { "south": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection", "y": 180 }
+    },
+    {
+      "when": { "west": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection", "y": 270 }
+    },
+    {
+      "when": { "up": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection", "x": 270}
+    },
+    {
+      "when": { "down": "true" },
+      "apply": { "model": "logical:block/logic_cable/logic_cable_connection", "x": 90 }
+    }
+  ]
+}
