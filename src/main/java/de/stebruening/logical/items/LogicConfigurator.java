@@ -2,10 +2,10 @@ package de.stebruening.logical.items;
 
 import net.minecraft.item.Item;
 
-public class Wrench extends Item
+public class LogicConfigurator extends Item
 {
 
-    public Wrench(Settings settings)
+    public LogicConfigurator(Settings settings)
     {
         super(settings);
     }
