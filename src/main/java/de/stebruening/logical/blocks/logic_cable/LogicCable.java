@@ -1,11 +1,19 @@
 package de.stebruening.logical.blocks.logic_cable;
 
+import de.stebruening.logical.items.LogicConfigurator;
+import de.stebruening.logical.registry.RegisterBlocks;
+import de.stebruening.logical.registry.RegisterItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -43,7 +51,6 @@ public class LogicCable extends Block
     }
 
 
-
     private BlockState makeConnections(World world, BlockPos pos)
     {
         Boolean down = canConnectTo(world, pos.down());
@@ -68,9 +75,16 @@ public class LogicCable extends Block
         return Boolean.FALSE;
     }
 
-    //Updates the Blockstate when Cable is placed
+    //get Blockstate for World.setBlockstate()
+    public BlockState getSpawnState(World world, BlockPos blockPos)
+    {
+        return makeConnections(world, blockPos);
+    }
+
+    //Gets appropriate State when the Player places the Block
     @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
+    public BlockState getPlacementState(ItemPlacementContext context)
+    {
         return makeConnections(context.getWorld(), context.getBlockPos());
     }
 
@@ -78,14 +92,17 @@ public class LogicCable extends Block
     @SuppressWarnings("deprecation")
     @Override
     public BlockState getStateForNeighborUpdate(BlockState ourState, Direction ourFacing, BlockState otherState,
-                                                WorldAccess worldIn, BlockPos ourPos, BlockPos otherPos) {
+                                                WorldAccess worldIn, BlockPos ourPos, BlockPos otherPos)
+    {
 
         Boolean value = canConnectTo(worldIn, otherPos);
         return ourState.with(getProperty(ourFacing), value);
     }
 
-    public BooleanProperty getProperty(Direction facing) {
-        switch (facing) {
+    public BooleanProperty getProperty(Direction facing)
+    {
+        switch (facing)
+        {
             case WEST:
                 return WEST;
             case NORTH:
@@ -103,16 +120,17 @@ public class LogicCable extends Block
 
     @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext shapeContext) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext shapeContext)
+    {
 
         final double size = 6;
 
         final List<VoxelShape> connections = new ArrayList<>();
         final VoxelShape baseShape = Block.createCuboidShape(size, size, size, 16.0D - size, 16.0D - size, 16.0D - size);
 
-        for(Direction dir : Direction.values())
+        for (Direction dir : Direction.values())
         {
-            if(state.get(getProperty(dir)))
+            if (state.get(getProperty(dir)))
             {
                 double x = dir == Direction.WEST ? 0 : dir == Direction.EAST ? 16D : size;
                 double z = dir == Direction.NORTH ? 0 : dir == Direction.SOUTH ? 16D : size;
@@ -128,5 +146,18 @@ public class LogicCable extends Block
     }
 
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockHitResult hitResult)
+    {
+        ItemStack mainHandStack = playerIn.getMainHandStack();
+
+        if (mainHandStack.getItem() instanceof LogicConfigurator && !worldIn.isClient())
+        {
+            worldIn.setBlockState(hitResult.getBlockPos(), RegisterBlocks.LOGIC_CABLE_INTERFACE.getSpawnState(worldIn, pos), 3);
+        }
+
+        return ActionResult.SUCCESS;
+    }
 
 }

@@ -12,5 +12,6 @@ public class LogicalClient implements ClientModInitializer
     public void onInitializeClient()
     {
         BlockRenderLayerMap.INSTANCE.putBlock(RegisterBlocks.LOGIC_CABLE, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(RegisterBlocks.LOGIC_CABLE_INTERFACE, RenderLayer.getTranslucent());
     }
 }

@@ -1,5 +1,6 @@
 {
   "block.logical.logic_cable": "Logic Cable",
+  "block.logical.logic_cable_interface": "Logic Cable Interface",
   "itemGroup.logical.logical": "logical",
   "item.logical.logic_configurator" : "Logic Configurator"
 }

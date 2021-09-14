@@ -16,7 +16,7 @@ public class Logical implements ModInitializer
     public static final String MOD_ID = "logical";
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
-            new Identifier("logical","logical"),() -> new ItemStack(RegisterItems.LOGIC_CONFIGURATOR));
+            new Identifier("logical", "logical"), () -> new ItemStack(RegisterItems.LOGIC_CONFIGURATOR));
 
     @Override
     public void onInitialize()
